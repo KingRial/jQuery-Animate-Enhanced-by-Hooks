@@ -1,5 +1,5 @@
 /**
- * Overscroll v1.6.3
+ * jQuery Animate enhanced by Hooks v0.0.3
  *  "jQuery Animate enhanced by Hooks" is a jQuery Plugin to let animate function (http://api.jquery.com/animate/) to use CSS3 feature when possible.
  *  By using CSS3 features like transition, translate or translate3d, this plugin will let better performances during animation on all the systems, especially on mobiles.
  *  The entire plugin is based on jQuery Hooks (http://api.jquery.com/jQuery.cssHooks/) and it requires jQuery 1.4.3+ version to be used.
@@ -64,7 +64,6 @@
 	*/
 	function _isAppropriateProperty(prop,value,element) {
 		var bIs=($.inArray(prop, aCssTransitionProperties) > -1);
-		//if ((prop == 'width' || prop == 'height') && (value === parseFloat(element.css(prop)))) is = false;
 		return bIs;
 	}
 	
@@ -94,7 +93,6 @@
 					var bIsTransform=($.inArray(prop,aCssDirections) > -1);
 					var bIsApropriateProperty=_isAppropriateProperty(prop,propValue,jElement);
 					if(bIsApropriateProperty){
-						//fx.options._animateEnhancedHook=true;
 						//Custom behaviour
 						if(fx.now==fx.start){//Start
 							var oCss={};
