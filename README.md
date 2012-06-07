@@ -14,8 +14,7 @@ Dual licensed under the MIT or GPL Version 2 licenses.
 
 Notes
 -----
-After using for a long time the jQuery-Animate-Enhanced from Ben Barnett (http://github.com/benbarnett/jQuery-Animate-Enhanced), I met some problems.
-All the jquery queue for animations wasn't anymore compatible with such great plugins.
+After using for a long time the jQuery-Animate-Enhanced from Ben Barnett (http://github.com/benbarnett/jQuery-Animate-Enhanced), I met some problems: the jquery queues for animations weren't compatible with the plugin.
 I tried to patch such great library without success, so I decided to create my own plugin trying to build a less complex solution withing the jQuery environment.
 
 Special Thanks to:
