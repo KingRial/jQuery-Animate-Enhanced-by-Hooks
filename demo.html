@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>jQuery Animations with automatic CSS3 transitions/translate when possible by jQuery HOOKS</title>
+	<meta name="author" content="Riccardo 'Rial' Re">
+	<!-- Date: 2010-09-01 -->
+	
+	<style type="text/css" media="screen">
+		html {
+			padding:0;
+			margin:0;
+			background:#ebebeb;
+		}
+		
+		body {
+			width:760px;
+			padding:15px;
+			margin:15px auto;
+			background:#fff;
+			font: 75% "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+			-webkit-border-radius:10px;
+			-moz-border-radius:10px;
+			border-radius:10px;
+		}
+		
+		h2.highlight {
+			padding:5px;
+			background:#ffcc00;
+		}
+		.target {
+			padding:5px 20px;
+			width:250px;
+			background:#0c0;
+			margin:20px 0;
+			position:relative;
+			font-size:80%;
+		}
+	</style>
+</head>
+<body>
+	<h1>jquery.animate-enhanced-hook plugin Tests</h1>
+	<h2>Enhancing jQuery animate by jQuery Hooks using CSS3 features</h2>
+	</br>
+	
+	<h3>Demo: Slide left/down/up/right with delay between animation and different duration</h3>
+	<div class="target targetSlideDelay">
+		Content to slide left/down/up/right with delay between animations and different duration
+	</div>
+	<button id="startSlide">Run test</button>
+	<script type="text/javascript" src="./jquery-1.7.2.js"></script>
+	<script type="text/javascript" src="./jquery.animate-enhanced-hook.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$('button#startSlide').click(function() {
+			var button = $(this).attr('disabled', 'disabled');
+			$('.targetSlideDelay')
+				.delay(1000)
+				.animate({left: "+=200px"}, 3000)
+				.delay(1000)
+				.animate({top: "+=50px"}, 1000)
+				.delay(1000)
+				.animate({top: "-=50px"}, 3000)
+				.delay(1000)
+				.animate({left: "-=200px"}, 1000, function(){button.removeAttr('disabled');})
+			;
+		});
+	</script>
+	
+	<h3>Demo: Slide left/down AND up/right with delay between animation and different duration</h3>
+	<div class="target targetSlideDelayAND">
+		Content to slide left/down AND up/right with delay between animations and different duration
+	</div>
+	<button id="startSlideAND">Run test</button>
+	<script type="text/javascript" src="../jquery-1.7.js"></script>
+	<script type="text/javascript" src="./jquery.animate-enhanced-hook.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$('button#startSlideAND').click(function() {
+			var button = $(this).attr('disabled', 'disabled');
+			$('.targetSlideDelayAND')
+				.delay(1000)
+				.animate({left: "+=200px",top: "+=50px"}, 3000)
+				.delay(1000)
+				.animate({left: "-=200px",top: "-=50px"}, 1000, function(){button.removeAttr('disabled');})
+			;
+		});
+	</script>
+	
+	<h3>Demo: modify height AND width</h3>
+	<div class="target targetHeightWidth">
+		Content to modify height AND width
+	</div>
+	<button id="startHeightWidth">Run test</button>
+	<script type="text/javascript" src="../jquery-1.7.js"></script>
+	<script type="text/javascript" src="./jquery.animate-enhanced-hook.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$('button#startHeightWidth').click(function() {
+			var button = $(this).attr('disabled', 'disabled');
+			$('.targetHeightWidth')
+				.delay(1000)
+				.animate({width:'+=200px',height:'+=100px'}, 3000)
+				.delay(1000)
+				.animate({width:'-=200px',height:'-=100px'}, 1000,function(){button.removeAttr('disabled');})
+			;
+		});
+	</script>
+	
+	<h3>Demo: hide/show with opacity</h3>
+	<div class="target targetOpacityDelay">
+		Content to hide/show with opacity
+	</div>
+	<button id="startOpacity">Run test</button>
+	<script type="text/javascript" src="../jquery-1.7.js"></script>
+	<script type="text/javascript" src="./jquery.animate-enhanced-hook.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$('button#startOpacity').click(function() {
+			var button = $(this).attr('disabled', 'disabled');
+			$('.targetOpacityDelay')
+				.delay(1000)
+				.animate({opacity:0}, 5000,function(){button.removeAttr('disabled');})
+				.delay(1000)
+				.animate({opacity:1}, 3000)
+			;
+		});
+	</script>
+
+</body>
+</html>

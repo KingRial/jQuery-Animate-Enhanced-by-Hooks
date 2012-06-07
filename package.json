@@ -1,0 +1,36 @@
+{
+    "name": "jquery.animate-enhanced-hooks",
+    "version": "0.0.1",
+    "title": "jQuery.animate-enhanced-hooks",
+    "author": {
+        "name": "Riccardo Re",
+        "url": ""
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://raw.github.com/jquery/jquery/master/MIT-LICENSE.txt"
+        },
+        {
+            "type": "GPL",
+            "url": "https://raw.github.com/jquery/jquery/master/GPL-LICENSE.txt"
+        }
+    ],
+    "dependencies": {
+        "jquery": ">=1.4.3"
+    },
+    "description": "A jQuery plugin which enhance animations using CSS3 transform/translate/translate3d by jQuery hooks.",
+    "keywords": [
+        "animate", "transform", "translate", "translate3d", "jquery", "javascript", "plugin", "plug-in", "CSS3", "css3"
+    ],
+    "homepage": "",
+    "contributors": [
+        {
+            "name": "Riccardo Re",
+            "url": "https://github.com/KingRial"
+        }
+    ],
+    "files": [
+        "jquery.animate-enhanced-hook.js"
+    ]
+}
