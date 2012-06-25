@@ -1,4 +1,4 @@
-jQuery Animate enhanced by Hooks v0.0.3
+jQuery Animate enhanced by Hooks v0.0.4
 =================
 "jQuery Animate enhanced by Hooks" is a jQuery Plugin to let animate function (http://api.jquery.com/animate/) to use CSS3 feature when possible.
 By using CSS3 features like transition, translate or translate3d, this plugin will let better performances during animation on all the systems, especially on mobiles.
@@ -27,6 +27,8 @@ A lot of improvements can still be done; for example adding more css transformat
 
 Change Log
 ----------
+ * __0.0.4__
+  - Faking scrollLeft/scrollTop animation using CSS3, and position absolute/relative of the container and the contained element
  * __0.0.3__
   - Typos and minor fixes
  * __0.0.2__

@@ -24,6 +24,7 @@
 	
 	var aCssPrefixes=['-o-','-moz-','-webkit-',''],
 		aCssTransitionProperties = ['top', 'right', 'bottom', 'left', 'opacity', 'height', 'width'],
+		aAnimateScrolls = ['scrollLeft','scrollTop'],
 		aCssDirections = ['top', 'right', 'bottom', 'left'];
 	
 	var thisBody = document.body || document.documentElement,
@@ -81,59 +82,108 @@
 		return fResult;
 	}
 	
-	//Adding Hooks
+	//Adding Hooks for Transitions
 	for(var i in aCssTransitionProperties){
 		var sCssProp=aCssTransitionProperties[i];
 		$.fx.step[sCssProp]=function(fx){
-					var prop=fx.prop //Css Property
-					var propUnit=fx.unit //Css Unit
-					var propValue=fx.end //Value
-					var iDuration=fx.options.duration //Fx duration
-					var jElement=$(fx.elem);
-					var bIsTransform=($.inArray(prop,aCssDirections) > -1);
-					var bIsApropriateProperty=_isAppropriateProperty(prop,propValue,jElement);
-					if(bIsApropriateProperty){
-						//Custom behaviour
-						if(fx.now==fx.start){//Start
-							var oCss={};
-							for (var i=0;i<aCssPrefixes.length;i++){
-								var oTransformVector={};
-								//Checking Presence for concurrent animations
-								var sTransitionPrepend=jElement.prop('style')[aCssPrefixes[i]+'transition'];
-								if(bIsTransform){
-									var sPrecedentTransform=jElement.prop('style')[aCssPrefixes[i]+'transform'];
-									oTransformVector.x=(prop=='left'||prop=='right'?iRelativeValue:0);
-									oTransformVector.y=(prop=='top'||prop=='bottom'?iRelativeValue:0);
-									if(sPrecedentTransform){
-										var aTransformVector=sPrecedentTransform.split('(')[1].split(')')[0].split(',');
-										oTransformVector.x+=_cleanValue(aTransformVector[0]);
-										oTransformVector.y+=_cleanValue(aTransformVector[1]);
-									}
-								}
-								//Creating new Css
-								var iRelativeValue=propValue-_cleanValue(jElement.css(prop));
-								oCss[aCssPrefixes[i]+'transition']=(bIsTransform?
-										aCssPrefixes[i]+'transform ':
-										(sTransitionPrepend?sTransitionPrepend+', ':'')+prop+' '
-									)+(iDuration>0?iDuration+'ms ease-in-out':'');
-								if(bIsTransform)oCss[aCssPrefixes[i]+'transform']=_getTranslation(oTransformVector.x,oTransformVector.y,options.bUse3d);
-								else oCss[prop]=propValue+propUnit;
+			var prop=fx.prop //Css Property
+			var propUnit=fx.unit //Css Unit
+			var propValue=fx.end //Value
+			var iDuration=fx.options.duration //Fx duration
+			var jElement=$(fx.elem);
+			var bIsTransform=($.inArray(prop,aCssDirections) > -1);
+			var bIsApropriateProperty=_isAppropriateProperty(prop,propValue,jElement);
+			if(bIsApropriateProperty){
+				//Custom behaviour
+				if(fx.now==fx.start){//Start
+					var oCss={};
+					for (var i=0;i<aCssPrefixes.length;i++){
+						var oTransformVector={};
+						//Checking Presence for concurrent animations
+						var sTransitionPrepend=jElement.prop('style')[aCssPrefixes[i]+'transition'];
+						if(bIsTransform){
+							var sPrecedentTransform=jElement.prop('style')[aCssPrefixes[i]+'transform'];
+							oTransformVector.x=(prop=='left'||prop=='right'?iRelativeValue:0);
+							oTransformVector.y=(prop=='top'||prop=='bottom'?iRelativeValue:0);
+							if(sPrecedentTransform){
+								var aTransformVector=sPrecedentTransform.split('(')[1].split(')')[0].split(',');
+								oTransformVector.x+=_cleanValue(aTransformVector[0]);
+								oTransformVector.y+=_cleanValue(aTransformVector[1]);
 							}
-							//Setting new Css
-							jElement.css(oCss);
 						}
-						else if(fx.now==fx.end){//End
-							var oCss={};
-							for (var i=0;i<aCssPrefixes.length;i++){
-								oCss[aCssPrefixes[i]+'transition']='';
-								oCss[aCssPrefixes[i]+'transform']='';
-								//if(bIsTransform)oCss[aCssPrefixes[i]+'transform']='';
-							}
-							oCss[prop]=propValue;
-							//Restoring real css value to let the system make the correct math
-							jElement.css(oCss);
-						}
+						//Creating new Css
+						var iRelativeValue=propValue-_cleanValue(jElement.css(prop));
+						oCss[aCssPrefixes[i]+'transition']=(bIsTransform?
+								aCssPrefixes[i]+'transform ':
+								(sTransitionPrepend?sTransitionPrepend+', ':'')+prop+' '
+							)+(iDuration>0?iDuration+'ms ease-in-out':'');
+						if(bIsTransform)oCss[aCssPrefixes[i]+'transform']=_getTranslation(oTransformVector.x,oTransformVector.y,options.bUse3d);
+						else oCss[prop]=propValue+propUnit;
 					}
+					//Setting new Css
+					jElement.css(oCss);
 				}
+				else if(fx.now==fx.end){//End
+					var oCss={};
+					for (var i=0;i<aCssPrefixes.length;i++){
+						oCss[aCssPrefixes[i]+'transition']='';
+						oCss[aCssPrefixes[i]+'transform']='';
+					}
+					oCss[prop]=propValue;
+					//Restoring real css value to let the system make the correct math
+					jElement.css(oCss);
+				}
+			}
+		}
+	}
+	
+	//Faking scroll using transitions
+	for(var i in aAnimateScrolls){
+		var sScollType=aAnimateScrolls[i];
+		//$._fxOrig.step[sScollType]=$.fx.step[sScollType];
+		$.fx.step[sScollType]=function(fx){
+			var prop=fx.prop //Css Property
+			var propUnit=fx.unit //Css Unit
+			var propValue=fx.end //Value
+			var iDuration=fx.options.duration //Fx duration
+			var jElement=$(fx.elem);//Element
+			var jChildren=jElement.children();//Element's children
+			//Custom behaviour
+			if(fx.now==fx.start){//Start
+				jElement.css({position:'relative'});
+				jChildren.css({position:'absolute'});
+				var sCssDirection=null;
+				switch(prop){
+					case 'scrollTop':
+						sCssDirection='top';
+					break;
+					case 'scrollLeft':
+					default:
+						sCssDirection='left';
+					break;
+				}
+				var iValue=(propValue>0?'-':'+')+'='+Math.abs(propValue);
+				var oCss={};
+				oCss[sCssDirection]=iValue;
+				jChildren.animate(
+					oCss,
+					iDuration,
+					function(){
+						$(this).css({sCssDirection:'auto'});
+					}
+				);
+			}
+			else if(fx.now==fx.end){//End
+				/*
+				var oCss={
+					'position':''
+				};
+				oCss[sCssDirection]='';
+				jChildren.css(oCss);
+				jElement.css({'position':''});
+				*/
+				//jElement.get(0)[prop]=propValue;
+			}
+		}
 	}
 })(jQuery);

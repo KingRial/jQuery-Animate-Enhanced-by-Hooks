@@ -109,10 +109,62 @@
 			var button = $(this).attr('disabled', 'disabled');
 			$('.targetOpacityDelay')
 				.delay(1000)
-				.animate({opacity:0}, 5000,function(){button.removeAttr('disabled');})
+				.animate({opacity:0}, 5000)
 				.delay(1000)
-				.animate({opacity:1}, 3000)
+				.animate({opacity:1}, 3000,function(){button.removeAttr('disabled');})
 			;
+		});
+	</script>
+	
+	<h3>Demo: scrollLeft/scrollTop </h3>
+	<style type="text/css">
+		.targetScrollDelay { width: 2500px; height: 2500px; margin:0; padding: 0; }
+		.targetScrollDelay li { display: block; float: left; width: 100px; height: 100px; background-color: #FFF; }
+		.targetScrollDelay li.alt { background-color: #C00; }
+		.targetScrollDelay li.last { clear: both; visibility: hidden; height: 0; padding: 0; }
+	</style>
+	<div id="targetScrollDelayContainer" style="width: 250px;height: 25px;overflow: hidden;border: solid 0px #000;position: relative;border: 1px black solid;" >
+		<ul class="targetScrollDelay" style="position:absolute;" >
+			<li>Scrolling element</li><li class="alt">1</li><li>a</li><li class="alt"></li><li></li><li class="alt">a</li>
+		 	<li>b</li><li class="alt">2</li><li>b</li><li class="alt"></li><li></li><li class="alt">b</li>
+			<li>c</li><li class="alt">3</li><li>c</li><li class="alt"></li><li></li><li class="alt">c</li>
+			<li>d</li><li class="alt">4</li><li>d</li><li class="alt"></li><li></li><li class="alt">d</li>
+		 	<li>e</li><li class="alt">5</li><li>e</li><li class="alt"></li><li></li><li class="alt">e</li>
+			<li>f</li><li class="alt">6</li><li>f</li><li class="alt"></li><li></li><li class="alt">f</li>
+			<li>g</li><li class="alt">7</li><li>g</li><li class="alt"></li><li></li><li class="alt">g</li>
+		 	<li>h</li><li class="alt">8</li><li>h</li><li class="alt"></li><li></li><li class="alt">h</li>
+			<li>i</li><li class="alt">9</li><li>i</li><li class="alt"></li><li></li><li class="alt">i</li>
+			<li>l</li><li class="alt">10</li><li>l</li><li class="alt"></li><li></li><li class="alt">l</li>
+		</ul>
+	</div>
+	<button id="startScrollDelay">Run test</button>
+	<script type="text/javascript" charset="utf-8">
+		$('button#startScrollDelay').click(function() {
+			var button = $(this).attr('disabled', 'disabled');
+			/*
+			$('.targetScrollDelay')
+				.delay(1000)
+				.animate({left:'-=200px'},3000)
+				.delay(1000)
+				.animate({left:'+=200px'},1000)
+				.delay(1000)
+				.animate({top:'-=200px'},1000)
+				.delay(1000)
+				.animate({top:'+=200px'},1000,function(){button.removeAttr('disabled');})
+			;
+			*/
+			
+			$('#targetScrollDelayContainer')
+				.delay(1000)
+				.animate({scrollLeft:'+=200px'},3000)
+				.delay(1000)
+				.animate({scrollLeft:'-=200px'},1000)
+				.delay(1000)
+				.animate({scrollTop:'+=200px'},1000)
+				.delay(1000)
+				.animate({scrollTop:'-=200px'},1000,function(){button.removeAttr('disabled');})
+			;
+			
 		});
 	</script>
 
